@@ -110,6 +110,7 @@ public class EmployeeController {
 
     /**
      * 启用禁用员工账号
+     *
      * @param status
      * @param id
      * @return
@@ -120,6 +121,34 @@ public class EmployeeController {
         log.info("启用/禁用员工账号:{},{}", status, id);
         employeeService.status(status, id);
         return Result.success();
+    }
+
+
+    /**
+     * 编辑员工信息
+     * @param employeeDTO
+     * @return
+     */
+    @PutMapping
+    @ApiOperation("编辑员工信息")
+    public Result<String> update(@RequestBody EmployeeDTO employeeDTO) {
+        log.info("编辑员工信息:{}", employeeDTO);
+        employeeService.update(employeeDTO);
+        return Result.success("编辑信息成功");
+    }
+
+
+    /**
+     * 根据id查询员工
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    @ApiOperation("根据id查询员工(回显数据)")
+    public Result<Employee> getById(@PathVariable Long id) {
+        log.info("根据id查询员工:{}", id);
+        Employee employee = employeeService.getById(id);
+        return Result.success(employee);
     }
 
 }
