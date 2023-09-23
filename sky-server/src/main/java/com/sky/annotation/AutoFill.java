@@ -16,5 +16,6 @@ import java.lang.annotation.Target;
 public @interface AutoFill {
 
     //数据库操作类型：INSERT UPDATE
+    //在注解中的参数格式：class 参数名 ();
     OperationType value();
 }

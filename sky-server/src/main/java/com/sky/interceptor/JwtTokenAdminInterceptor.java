@@ -53,7 +53,7 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
             return true;
         } catch (Exception ex) {
             //4、不通过，响应401状态码
-            response.setStatus(401);
+            response.setStatus(401);//和前端约定好的标识 前端会跳转到login页面
             return false;
         }
     }

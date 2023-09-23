@@ -6,6 +6,7 @@ import com.sky.context.BaseContext;
 import com.sky.enumeration.OperationType;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -37,12 +38,12 @@ public class AutoFillAspect {
         AutoFill autoFill = signature.getMethod().getAnnotation(AutoFill.class);//获得方法上的注解对象
         OperationType operationType = autoFill.value();//获得数据库操作类型
 
-        //获取当前被拦截的方法的参数--实体对象
+        //获取当前被拦截的方法的参数--方法参数就是实体对象
         Object[] args = joinPoint.getArgs();
         if (args == null || args.length == 0){
             return;
         }
-        Object entity = args[0];
+        Object entity = args[0];//实体对象是第一个参数
 
         //准备赋值数据
         LocalDateTime now = LocalDateTime.now();

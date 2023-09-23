@@ -39,17 +39,16 @@ public class DishServiceImpl implements DishService {
 
         dishMapper.insert(dish);
 
-        //获取insert语句生成的主键值、
+        //获取insert语句生成的主键值！！！！
         Long dishId = dish.getId();
 
         //向口味表插入n条数据
         List<DishFlavor> flavors = dishDTO.getFlavors();
-        if(flavors != null ){
+        if (flavors != null && flavors.size() > 0) {//当不添加口味的时候，flavors仍旧是个空集合，仍然会执行下面的插入语句，所以需要判断size
             flavors.forEach(dishFlavor -> {
                 dishFlavor.setDishId(dishId);
             });
             dishFlavorMapper.insertBatch(flavors);
-
         }
     }
 }
