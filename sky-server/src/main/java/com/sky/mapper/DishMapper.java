@@ -8,7 +8,6 @@ import com.sky.enumeration.OperationType;
 import com.sky.vo.DishVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -42,4 +41,12 @@ public interface DishMapper {
     Dish getById(Long id);
 
     void batchDelete(List<Long> ids);
+
+
+    /**
+     * 根据id动态修改菜品
+     * @param dish
+     */
+    @AutoFill(OperationType.UPDATE)
+    void update(Dish dish);
 }
