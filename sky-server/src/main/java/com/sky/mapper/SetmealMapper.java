@@ -8,6 +8,7 @@ import com.sky.enumeration.OperationType;
 import com.sky.vo.SetmealVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public interface SetmealMapper {
 
     /**
      * 根据分类id查询套餐的数量
+     *
      * @param id
      * @return
      */
@@ -25,6 +27,7 @@ public interface SetmealMapper {
 
     /**
      * 新增套餐
+     *
      * @param setmeal
      */
     @AutoFill(OperationType.INSERT)
@@ -33,6 +36,7 @@ public interface SetmealMapper {
 
     /**
      * 分页查询
+     *
      * @param setmealPageQueryDTO
      * @return
      */
@@ -40,7 +44,6 @@ public interface SetmealMapper {
 
 
     List<Setmeal> getByIds(List<Long> ids);
-
 
 
     void batchDelete(List<Long> ids);
@@ -51,7 +54,7 @@ public interface SetmealMapper {
     SetmealVO getById(Long id);
 
 
-
     @AutoFill(OperationType.UPDATE)
     void update(Setmeal setmeal);
+
 }
