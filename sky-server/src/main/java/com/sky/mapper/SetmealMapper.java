@@ -6,7 +6,6 @@ import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Setmeal;
 import com.sky.enumeration.OperationType;
 import com.sky.vo.SetmealVO;
-import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -45,4 +44,14 @@ public interface SetmealMapper {
 
 
     void batchDelete(List<Long> ids);
+
+
+    @Select("select s.*, c.name categoryName from setmeal s left join category c " +
+            "on s.category_id = c.id where s.id = #{id}")
+    SetmealVO getById(Long id);
+
+
+
+    @AutoFill(OperationType.UPDATE)
+    void update(Setmeal setmeal);
 }
