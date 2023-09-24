@@ -11,6 +11,7 @@
     </insert>
 
 
+
     <select id="pageQuery" resultType="com.sky.vo.SetmealVO">
         select s.*, c.name category_name from setmeal s left join category c on s.category_id = c.id
         <where>
@@ -27,5 +28,22 @@
         order by s.create_time desc
     </select>
 
+
+    <select id="getByIds" resultType="com.sky.entity.Setmeal">
+        select * from setmeal where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
+
+
+    <delete id="batchDelete">
+        delete
+        from setmeal
+        where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
 
 </mapper>

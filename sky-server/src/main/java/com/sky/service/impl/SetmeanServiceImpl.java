@@ -2,10 +2,13 @@ package com.sky.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.sky.constant.MessageConstant;
+import com.sky.constant.StatusConstant;
 import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Setmeal;
 import com.sky.entity.SetmealDish;
+import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.SetmealDishMapper;
 import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
@@ -31,6 +34,7 @@ public class SetmeanServiceImpl implements SetmealService {
 
     /**
      * 新增套餐，同时需要保存套餐和菜品的关联关系
+     *
      * @param setmealDTO
      */
     @Transactional
@@ -56,6 +60,7 @@ public class SetmeanServiceImpl implements SetmealService {
 
     /**
      * 分页查询
+     *
      * @param setmealPageQueryDTO
      * @return
      */
@@ -64,5 +69,21 @@ public class SetmeanServiceImpl implements SetmealService {
         PageHelper.startPage(setmealPageQueryDTO.getPage(), setmealPageQueryDTO.getPageSize());
         Page<SetmealVO> page = setmealMapper.pageQuery(setmealPageQueryDTO);
         return new PageResult(page.getTotal(), page.getResult());
+    }
+
+    /**
+     * 批量删除套餐
+     * @param ids
+     */
+    @Transactional
+    public void deleteByIds(List<Long> ids) {
+        List<Setmeal> setmeals = setmealMapper.getByIds(ids);
+        for (Setmeal setmeal : setmeals) {
+            if (StatusConstant.ENABLE.equals(setmeal.getStatus())) {
+                throw new DeletionNotAllowedException(MessageConstant.SETMEAL_ON_SALE);
+            }
+        }
+        setmealDishMapper.batchDelete(ids);
+        setmealMapper.batchDelete(ids);
     }
 }
