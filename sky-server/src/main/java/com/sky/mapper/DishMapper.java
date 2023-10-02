@@ -8,6 +8,7 @@ import com.sky.enumeration.OperationType;
 import com.sky.vo.DishVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -65,4 +66,8 @@ public interface DishMapper {
      */
     @Select("select d.* from dish d join setmeal_dish sb on d.id = sb.dish_id where sb.setmeal_id = #{setmealId}")
     List<Dish> getBySetmealId(Long setmealId);
+
+
+    @Update("update dish set status =  #{status} where id =#{id};")
+    void changeStatus(Integer status, Long id);
 }
